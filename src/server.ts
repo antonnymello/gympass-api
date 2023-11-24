@@ -8,4 +8,7 @@ app
   })
   .then(() => {
     console.log('Server listening on port 3333');
+  })
+  .catch((err) => {
+    console.error('Error starting server', err);
   });
