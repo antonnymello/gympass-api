@@ -35,7 +35,7 @@ describe('Authenticate Use Case', () => {
     await expect(promise).rejects.toBeInstanceOf(InvalidCredentialsError);
   });
 
-  it('should not be able to authenticate with wrong email', async () => {
+  it('should not be able to authenticate with wrong password', async () => {
     const userRepository = new InMemoryUsersRepository();
     const sut = new AuthenticateUseCase(userRepository);
 
