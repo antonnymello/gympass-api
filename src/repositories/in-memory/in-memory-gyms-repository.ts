@@ -1,5 +1,9 @@
 /* eslint-disable @typescript-eslint/no-base-to-string */
-import { type GymsRepository } from '@/repositories/gyms-repository';
+import {
+  type FindManyNearbyParams,
+  type GymsRepository,
+} from '@/repositories/gyms-repository';
+import { getDistanceBetweenCoordinates } from '@/utils/get-distance-between-coordinates';
 import { Prisma, type Gym } from '@prisma/client';
 import { randomUUID } from 'crypto';
 
@@ -8,6 +12,20 @@ export class InMemoryGymsRepository implements GymsRepository {
 
   async findById(id: string): Promise<Gym | null> {
     return this.items.find((gym) => gym.id === id) ?? null;
+  }
+
+  async findManyNearby(params: FindManyNearbyParams): Promise<Gym[]> {
+    return this.items.filter((gym) => {
+      const distance = getDistanceBetweenCoordinates(
+        { latitude: params.latitude, longitude: params.longitude },
+        {
+          latitude: gym.latitude.toNumber(),
+          longitude: gym.longitude.toNumber(),
+        }
+      );
+
+      return distance <= 10;
+    });
   }
 
   async findMany(query: string, page: number): Promise<Gym[]> {
