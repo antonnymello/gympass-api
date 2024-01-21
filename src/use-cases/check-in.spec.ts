@@ -3,6 +3,8 @@ import { InMemoryCheckInsRepository } from '@/repositories/in-memory/in-memory-c
 import { CheckInUseCase } from '@/use-cases/check-in';
 import { InMemoryGymsRepository } from '@/repositories/in-memory/in-memory-gyms-repository';
 import { Decimal } from '@prisma/client/runtime/library';
+import { MaxDistanceError } from '@/use-cases/errors/max-distance-error';
+import { MaxNumberOfCheckInsError } from '@/use-cases/errors/max-number-of-check-ins-error';
 
 describe('Authenticate Use Case', () => {
   let checkInsRepository: InMemoryCheckInsRepository;
@@ -58,7 +60,7 @@ describe('Authenticate Use Case', () => {
       userLongitude: 0,
     });
 
-    await expect(promise).rejects.toBeInstanceOf(Error);
+    await expect(promise).rejects.toBeInstanceOf(MaxNumberOfCheckInsError);
   });
 
   it('should be able to check in in different day', async () => {
@@ -100,6 +102,6 @@ describe('Authenticate Use Case', () => {
       userLongitude: 0,
     });
 
-    await expect(promise).rejects.toBeInstanceOf(Error);
+    await expect(promise).rejects.toBeInstanceOf(MaxDistanceError);
   });
 });
