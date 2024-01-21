@@ -9,18 +9,18 @@ describe('Authenticate Use Case', () => {
   let gymsRepository: InMemoryGymsRepository;
   let sut: CheckInUseCase;
 
-  beforeEach(() => {
+  beforeEach(async () => {
     checkInsRepository = new InMemoryCheckInsRepository();
     gymsRepository = new InMemoryGymsRepository();
     sut = new CheckInUseCase(checkInsRepository, gymsRepository);
 
-    gymsRepository.items.push({
+    await gymsRepository.create({
       id: 'any_gym_id',
       title: 'any_gym_title',
       phone: 'any_gym_phone',
       description: 'any_gym_description',
-      latitude: new Decimal(0),
-      longitude: new Decimal(0),
+      latitude: 0,
+      longitude: 0,
     });
 
     vi.useFakeTimers();
