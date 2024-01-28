@@ -1,5 +1,5 @@
 import { type CheckIn } from '@prisma/client';
-import { type CheckInsRepository } from '@/repositories/prisma/prisma-check-ins-repository';
+import { type CheckInsRepository } from '@/repositories/check-ins-repository';
 import { ResourceNotFoundError } from '@/use-cases/errors/resource-not-found-error';
 import { LateCheckInValidationError } from '@/use-cases/errors/late-check-in-validation-error';
 
