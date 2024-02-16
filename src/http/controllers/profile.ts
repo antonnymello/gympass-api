@@ -6,8 +6,6 @@ export const profile = async (
   request: FastifyRequest,
   reply: FastifyReply
 ): Promise<void> => {
-  await request.jwtVerify();
-
   const getUserProfile = makeGetUserProfileUseCase();
 
   const user = request.user as User;
