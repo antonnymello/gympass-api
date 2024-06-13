@@ -1,6 +1,9 @@
+import { PrismaClient } from '@prisma/client';
 import { execSync } from 'node:child_process';
 import { randomUUID } from 'node:crypto';
 import { type Environment } from 'vitest';
+
+const prisma = new PrismaClient();
 
 const generateDatabaseURL = (schema: string): string => {
   const databaseURL = process.env.DATABASE_URL;
@@ -28,7 +31,11 @@ const prismaEnvironment: Environment = {
 
     return {
       async teardown() {
-        console.log('Tearing down...');
+        await prisma.$executeRawUnsafe(
+          `DROP SCHEMA IF EXISTS "${schema}" CASCADE`
+        );
+
+        await prisma.$disconnect();
       },
     };
   },
