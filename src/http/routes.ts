@@ -1,5 +1,5 @@
 import { type FastifyInstance } from 'fastify';
-import { register } from '@/http/controllers/register.controller';
+import { register } from '@/http/controllers/register';
 import { authenticate } from '@/http/controllers/authenticate';
 import { profile } from '@/http/controllers/profile';
 import { verifyJWT } from '@/http/middlewares/verifiy-jwt';
